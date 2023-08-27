@@ -25,7 +25,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname,'public')));
 
-
+console
 app.use(session({
 	secret: 'som201309',
 	store : MongoStore.create ( { 

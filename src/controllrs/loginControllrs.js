@@ -6,17 +6,27 @@ exports.loginControllrs = (req,res)=>{
 };
 
 exports.register = async function(req,res){   
-	const login = new Login(req.body);
-	await login.register();
+	try{
+		const login = new Login(req.body);
+		await login.register();
 
-	if(login.errors.length>0){
-		req.flash("errors",login.errors);
+		if(login.errors.length>0){
+			req.flash("errors",login.errors);
+			req.session.save(function(){
+				return res.redirect('index');
+			});
+			return;
+		}
+
+		req.flash("succes","Seu usuário foi cadastrado com sucesso.");
 		req.session.save(function(){
 			return res.redirect('index');
 		});
-		return;
-	}
 
-	res.send(login.errors);
+		
+	
+	}catch(e){
+		res.render('404');
+	}
 };	
 
